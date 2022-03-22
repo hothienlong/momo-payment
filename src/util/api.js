@@ -1,5 +1,6 @@
 import { ROOT_API } from './../../constant';
 import axios from 'axios';
+import { getResponse } from './response';
 
 const createParams = (data) => {
 	if (!data) return '';
@@ -15,11 +16,14 @@ const handleFetch = async (url, options) => {
 
 		let jsonData = await response.data;
 
-		return { res: jsonData };
+		let body = getResponse(jsonData, false);
+
+		return body;
 	} catch (error) {
 		console.log('Error');
 		console.log(error);
-		return { res: null, message: error.message };
+		let response = getResponse(error, true);
+		return response;
 	}
 };
 
@@ -48,12 +52,12 @@ const sendRequest = async (method, options) => {
 		default:
 			break;
 	}
-	const { message, res } = await handleFetch(
+	const response = await handleFetch(
 		ROOT_API + '/' + url + params,
 		restOptions
 	);
 
-	return { message, res };
+	return response;
 };
 
 export default sendRequest;
