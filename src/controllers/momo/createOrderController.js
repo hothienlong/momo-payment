@@ -2,10 +2,10 @@ import { v4 as uuidv4 } from 'uuid';
 import Crypto from '../../momo/crypto';
 import account from '../../util/account';
 import sendRequest from '../../util/api';
-import config from './../../../config.json';
+import config from '../../../config.json';
 
 export default async (req, res) => {
-	console.log('createPaymentUrlController');
+	console.log('createOrderController');
 
 	var requestId = uuidv4();
 	var orderId = uuidv4();
@@ -55,7 +55,7 @@ export default async (req, res) => {
 	//console.log(data);
 
 	const { res: response, message } = await sendRequest('POST', {
-		url: config.api.initialPaymentMethod,
+		url: config.api.createOrder,
 		data: data,
 	});
 
