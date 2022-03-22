@@ -1,8 +1,8 @@
-import axios from 'axios';
-import crypto from 'crypto';
-import account from '../../util/account';
 import { v4 as uuidv4 } from 'uuid';
 import Crypto from '../../momo/crypto';
+import account from '../../util/account';
+import sendRequest from '../../util/api';
+import config from './../../../config.json';
 
 export default async (req, res) => {
 	console.log('createPaymentUrlController');
@@ -54,26 +54,11 @@ export default async (req, res) => {
 
 	//console.log(data);
 
-	try {
-		const result = await axios({
-			method: 'POST',
+	const { res: response, message } = await sendRequest('POST', {
+		url: config.api.initialPaymentMethod,
+		data: data,
+	});
 
-			url: 'https://test-payment.momo.vn/v2/gateway/api/create',
-
-			headers: {
-				'Content-Type': 'application/json',
-			},
-
-			data: data,
-		});
-
-		console.log(`statusCode: ${result.status}`);
-		//console.log(result);
-
-		return res.status(200).json(result.data);
-	} catch (error) {
-		console.log('Error');
-		console.log(error);
-		return res.status(500).json(error.message);
-	}
+	if (!response) return res.status(500).json(message);
+	return res.status(200).json(response);
 };
