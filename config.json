@@ -5,6 +5,7 @@
     "secretkey": "5IR9X3A2pa00ez1h9r2wUncxL5GQ47xy",
     "api": {
         "createOrder": "create",
-        "refund": "refund"
+        "refund": "refund",
+        "queryTransaction": "query"
     }
 }

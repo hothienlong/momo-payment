@@ -52,6 +52,7 @@ const sendRequest = async (method, options) => {
 		default:
 			break;
 	}
+	console.log(data);
 	const response = await handleFetch(
 		ROOT_API + '/' + url + params,
 		restOptions

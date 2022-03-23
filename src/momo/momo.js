@@ -16,30 +16,30 @@ class Momo {
 		return this.#instance;
 	}
 
-	getNewRequest(options = {}) {
-		console.log('options: ' + JSON.stringify(options));
+	getNewRequest(optionsSignature = {}) {
+		console.log('options: ' + JSON.stringify(optionsSignature));
 		var requestId = uuidv4();
-		var orderId = uuidv4();
-		var orderInfo = 'Thanh toán cho đơn hàng\n' + orderId;
+		var orderId = optionsSignature.orderId ?? uuidv4(); // query orderId hoặc tạo mới đơn hàng
+		//var orderInfo = 'Thanh toán cho đơn hàng\n' + orderId;
 
-		var requestType = 'captureWallet';
-		var extraData = ''; //pass empty value if your merchant does not have stores
+		//var requestType = 'captureWallet';
+		//var extraData = ''; //pass empty value if your merchant does not have stores
 
-		const order = {
+		const request = {
 			//amount: amount,
-			extraData: extraData,
+			//extraData: extraData,
 			//ipnUrl: ipnUrl,
 			orderId: orderId,
-			orderInfo: orderInfo,
+			//orderInfo: orderInfo,
 			partnerCode: config.partnerCode,
 			//redirectUrl: redirectUrl,
 			requestId: requestId,
-			requestType: requestType,
+			//requestType: requestType,
 		};
 		const dataSignature = {
 			accessKey: config.accessKey,
-			...order,
-			...options, // thêm field để ký
+			...request,
+			...optionsSignature, // thêm field options để ký
 		};
 
 		console.log('dataSignature');
@@ -48,50 +48,27 @@ class Momo {
 		const signature = Crypto.getInstance().compute(dataSignature);
 
 		return {
-			partnerName: config.partnerName,
 			signature: signature,
 			lang: 'vi',
-			...order,
+			...request,
 		};
 	}
 
 	getNewOrder(redirectUrl, ipnUrl, amount) {
-{/*
- 		var requestId = uuidv4();
- 		var orderId = uuidv4();
- 		var orderInfo = 'Thanh toán cho đơn hàng\n' + orderId;
- 
- 		var requestType = 'captureWallet';
- 		var extraData = ''; //pass empty value if your merchant does not have stores
-  
-*/}
-		const newRequest = this.getNewRequest({ redirectUrl, ipnUrl, amount });
-{/*
- 
- 		const order = {
- 			amount: amount,
- 			extraData: extraData,
- 			ipnUrl: ipnUrl,
- 			orderId: orderId,
- 			orderInfo: orderInfo,
- 			partnerCode: config.partnerCode,
- 			redirectUrl: redirectUrl,
- 			requestId: requestId,
- 			requestType: requestType,
- 		};
- 		const dataSignature = {
- 			accessKey: config.accessKey,
- 			...order,
- 		};
- 
- 		const signature = Crypto.getInstance().compute(dataSignature); 
-*/}
+		const options = {
+			redirectUrl,
+			ipnUrl,
+			amount,
+			orderInfo: 'Thanh toán đơn hàng',
+			extraData: '',
+			requestType: 'captureWallet',
+		};
+		const newRequest = this.getNewRequest(options);
 
 		return {
-			amount: amount,
-			ipnUrl: ipnUrl,
-			redirectUrl: redirectUrl,
 			...newRequest,
+			...options,
+			partnerName: config.partnerName,
 		};
 	}
 
@@ -103,6 +80,49 @@ class Momo {
 		const response = await sendRequest('POST', {
 			url: config.api.createOrder,
 			data: JSON.stringify(order),
+		});
+
+		return response;
+	}
+
+	async refund(amount, transId) {
+		const options = {
+			amount: amount,
+			description: 'Hoàn tiền giao dịch',
+			transId: transId,
+		};
+
+		const request = this.getNewRequest(options);
+
+		console.log('refund');
+		console.log(request);
+
+		const response = await sendRequest('POST', {
+			url: config.api.refund,
+			data: JSON.stringify({
+				...request,
+				...options,
+			}),
+		});
+
+		return response;
+	}
+
+	async queryTransaction(orderId) {
+		const options = {
+			orderId: orderId,
+		};
+
+		const request = this.getNewRequest(options);
+
+		console.log('queryTransaction');
+		console.log(request);
+
+		const response = await sendRequest('POST', {
+			url: config.api.queryTransaction,
+			data: JSON.stringify({
+				...request,
+			}),
 		});
 
 		return response;
