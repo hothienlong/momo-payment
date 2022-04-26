@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.use('/paypal', paypalRouter);
 router.use('/momo', momoRouter);
+router.use('/', momoRouter);
 
 export default router;
