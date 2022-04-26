@@ -1,5 +1,5 @@
 import app from './app';
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 // Environment variable on local will be using this to protect secret like API key, credentials
 if (!process.env.NODE_ENV) {
