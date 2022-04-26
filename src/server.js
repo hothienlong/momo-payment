@@ -7,10 +7,8 @@ if (!process.env.NODE_ENV) {
 }
 
 // Change this
-const databaseName = 'sample';
-
 const mongodbURI =
-	process.env.MONGODB_URI || `mongodb://localhost:27017/${databaseName}`;
+	'mongodb+srv://dbUser:thesishcmut@imansy.taaie.mongodb.net/InmansyDB?retryWrites=true&w=majority';
 
 mongoose.connect(mongodbURI, {
 	useNewUrlParser: true,
