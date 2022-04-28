@@ -1,6 +1,7 @@
-import { ROOT_API } from './../../constant';
+// import { ROOT_API } from './../../constant';
 import axios from 'axios';
 import { getResponse } from './response';
+const ROOT_API = 'https://test-payment.momo.vn/v2/gateway/api';
 
 const createParams = (data) => {
 	if (!data) return '';

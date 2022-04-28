@@ -7,7 +7,7 @@
     "test": "cross-env NODE_ENV=test jest",
     "dev": "nodemon --exec babel-node src/server.js --ignore 'node_modules'",
     "build": "cross-env NODE_ENV=production eslint ./src && babel ./src -D --out-dir dist",
-    "start": "NODE_ENV=production node ./dist/server.js",
+    "start": "cross-env NODE_ENV=production node ./dist/server.js",
     "eslint": "eslint ./src",
     "eslint-fix": "eslint ./src --fix"
   },
@@ -25,7 +25,8 @@
     "mongoose": "^6.0.7",
     "paypal-node-sdk": "^2.0.3",
     "uuid": "^8.3.2",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "cross-env": "^7.0.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.15.7",
@@ -34,7 +35,6 @@
     "@babel/preset-env": "^7.15.6",
     "babel-eslint": "^10.1.0",
     "babel-node": "0.0.1-security",
-    "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
