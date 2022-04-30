@@ -7,6 +7,8 @@ export default async (req, res) => {
 	var ipnUrl = req.body.ipnUrl;
 	var amount = req.body.amount;
 
+	console.log(req.body);
+
 	const response = await Momo.getInstance().createOrder(
 		redirectUrl,
 		ipnUrl,
