@@ -86,13 +86,13 @@ class Momo {
 		};
 	}
 
-	getNewOrder(redirectUrl, ipnUrl, amount) {
+	getNewOrder(redirectUrl, ipnUrl, amount, extraData) {
 		const options = {
 			redirectUrl,
 			ipnUrl,
 			amount,
+			extraData,
 			orderInfo: 'Thanh toán đơn hàng',
-			extraData: '',
 			requestType: 'captureWallet',
 		};
 		const newRequest = this.getNewRequest(options);
