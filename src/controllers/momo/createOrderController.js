@@ -10,6 +10,13 @@ export default async (req, res) => {
 
 	console.log(req.body);
 
+	/*
+ 	const buff = Buffer(extraData, 'base64');
+ 	const jsonString = buff.toString('ascii');
+ 	const jsonData = JSON.parse(jsonString);
+ 	console.log({ jsonData }); 
+	*/
+
 	const response = await Momo.getInstance().createOrder(
 		redirectUrl,
 		ipnUrl,

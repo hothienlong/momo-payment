@@ -104,8 +104,8 @@ class Momo {
 		};
 	}
 
-	async createOrder(redirectUrl, ipnUrl, amount) {
-		const order = this.getNewOrder(redirectUrl, ipnUrl, amount);
+	async createOrder(redirectUrl, ipnUrl, amount, extraData) {
+		const order = this.getNewOrder(redirectUrl, ipnUrl, amount, extraData);
 		console.log('create order');
 		console.log(order);
 
