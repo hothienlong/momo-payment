@@ -10,6 +10,8 @@ export default async (req, res) => {
 	var redirectUrl = req.body.redirectUrl;
 	var ipnUrl = req.body.ipnUrl;
 	var amount = req.body.amount;
+	var orderInfo = req.body.orderInfo;
+	var extraData = req.body.extraData;
 
 	console.log(req.body);
 
@@ -19,7 +21,9 @@ export default async (req, res) => {
 		requestId,
 		redirectUrl,
 		ipnUrl,
-		amount
+		amount,
+		orderInfo,
+		extraData
 	);
 
 	console.log(resData);

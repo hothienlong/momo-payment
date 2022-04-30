@@ -22,7 +22,9 @@ class Momo {
 		requestId,
 		redirectUrl,
 		ipnUrl,
-		amount
+		amount,
+		orderInfo,
+		extraData
 	) {
 		const accessKey = config.accessKey;
 
@@ -30,8 +32,8 @@ class Momo {
 			redirectUrl,
 			ipnUrl,
 			amount,
-			orderInfo: 'Thanh toán đơn hàng',
-			extraData: '',
+			orderInfo: orderInfo,
+			extraData: extraData,
 			requestType: 'captureWallet',
 		};
 
