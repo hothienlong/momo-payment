@@ -7,13 +7,19 @@ export default async (req, res) => {
 	var orderId = req.body.orderId;
 	var partnerCode = req.body.partnerCode;
 	var requestId = req.body.requestId;
+	var redirectUrl = req.body.redirectUrl;
+	var ipnUrl = req.body.ipnUrl;
+	var amount = req.body.amount;
 
 	console.log(req.body);
 
 	const resData = await Momo.getInstance().getSignaturePayment(
 		orderId,
 		partnerCode,
-		requestId
+		requestId,
+		redirectUrl,
+		ipnUrl,
+		amount
 	);
 
 	console.log(resData);

@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import config from '../../config.json';
 import sendRequest from '../util/api';
+import config from '../../config.json';
 import Crypto from './crypto';
 
 class Momo {
@@ -16,14 +16,31 @@ class Momo {
 		return this.#instance;
 	}
 
-	getSignaturePayment(orderId, partnerCode, requestId) {
+	getSignaturePayment(
+		orderId,
+		partnerCode,
+		requestId,
+		redirectUrl,
+		ipnUrl,
+		amount
+	) {
 		const accessKey = config.accessKey;
+
+		const options = {
+			redirectUrl,
+			ipnUrl,
+			amount,
+			orderInfo: 'Thanh toán đơn hàng',
+			extraData: '',
+			requestType: 'captureWallet',
+		};
 
 		const signature = Crypto.getInstance().compute({
 			accessKey,
 			orderId,
 			partnerCode,
 			requestId,
+			...options,
 		});
 
 		return signature;
@@ -76,7 +93,7 @@ class Momo {
 			extraData: '',
 			requestType: 'captureWallet',
 		};
-		const newRequest = this.getNewRequest({});
+		const newRequest = this.getNewRequest(options);
 
 		return {
 			...newRequest,
