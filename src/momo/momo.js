@@ -16,6 +16,19 @@ class Momo {
 		return this.#instance;
 	}
 
+	getSignaturePayment(orderId, partnerCode, requestId) {
+		const accessKey = config.accessKey;
+
+		const signature = Crypto.getInstance().compute({
+			accessKey,
+			orderId,
+			partnerCode,
+			requestId,
+		});
+
+		return signature;
+	}
+
 	getNewRequest(optionsSignature = {}) {
 		console.log('options: ' + JSON.stringify(optionsSignature));
 		var requestId = uuidv4();
