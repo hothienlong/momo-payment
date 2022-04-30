@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import sendRequest from '../util/api';
 import config from '../../config.json';
+import sendRequest from '../util/api';
 import Crypto from './crypto';
 
 class Momo {
@@ -76,7 +76,7 @@ class Momo {
 			extraData: '',
 			requestType: 'captureWallet',
 		};
-		const newRequest = this.getNewRequest(options);
+		const newRequest = this.getNewRequest({});
 
 		return {
 			...newRequest,
